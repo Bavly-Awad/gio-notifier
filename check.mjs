@@ -80,6 +80,25 @@ async function checkTwitch() {
       config.roles.live
     );
     console.log('twitch: went live, posted');
+    // also surface it as a server event (banner at top of channel list)
+    if (process.env.BOT_TOKEN && config.contest?.guildId) {
+      const start = new Date(Date.now() + 2 * 60 * 1000).toISOString();
+      const end = new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString();
+      const r = await fetch(`https://discord.com/api/v10/guilds/${config.contest.guildId}/scheduled-events`, {
+        method: 'POST',
+        headers: { Authorization: `Bot ${process.env.BOT_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: '🔴 Gio is LIVE on Twitch',
+          entity_type: 3,
+          entity_metadata: { location: `https://twitch.tv/${config.twitch}` },
+          scheduled_start_time: start,
+          scheduled_end_time: end,
+          privacy_level: 2,
+          description: 'Stream is up — pull up!',
+        }),
+      });
+      console.log(`twitch: scheduled event ${r.ok ? 'created' : 'failed http ' + r.status}`);
+    }
   } else {
     console.log(`twitch: live=${isLive} (was ${!!state.twitchLive})`);
   }

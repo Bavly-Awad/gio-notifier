@@ -26,6 +26,7 @@ jobs:
           WEBHOOK_TIKTOK: ${{ secrets.WEBHOOK_TIKTOK }}
           WEBHOOK_LIVE: ${{ secrets.WEBHOOK_LIVE }}
           WEBHOOK_YOUTUBE: ${{ secrets.WEBHOOK_YOUTUBE }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       - name: Persist state
         run: |
           if ! git diff --quiet state.json; then

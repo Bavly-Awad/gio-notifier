@@ -1,0 +1,28 @@
+name: weekly-backup
+
+on:
+  schedule:
+    - cron: "0 6 * * 0" # Sundays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node backup.mjs
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      - run: |
+          git config user.name "gio-notifier"
+          git config user.email "actions@users.noreply.github.com"
+          git add backups/
+          git diff --cached --quiet || git commit -m "backup: weekly config snapshot"
+          git pull --rebase
+          git push
