@@ -65,60 +65,93 @@ async function post(webhook, content, roleIds) {
 }
 
 // ---------- TikTok ----------
+// Video list sources, in preference order. Both yield the exact video URL;
+// rss-bridge is primary because tikwm's user/posts is usually Cloudflare-challenged.
+async function tiktokList(user) {
+  const feed = await fetchJson(
+    `https://rss-bridge.org/bridge01/?action=display&bridge=TikTokBridge&context=By+user&username=${user}&format=Json`,
+    2
+  );
+  const items = feed?.items;
+  if (Array.isArray(items) && items.length) {
+    const list = items
+      .map((it) => ({ id: it.url?.match(/\/video\/(\d+)/)?.[1], url: it.url, title: (it.title || '').trim() }))
+      .filter((v) => v.id);
+    if (list.length) { console.log(`tiktok: feed via rss-bridge (${list.length} items)`); return list; }
+  }
+  const posts = await fetchJson(`https://www.tikwm.com/api/user/posts?unique_id=${user}&count=10`, 2);
+  const videos = posts?.data?.videos;
+  if (Array.isArray(videos) && videos.length) {
+    console.log(`tiktok: feed via tikwm (${videos.length} items)`);
+    return videos.map((v) => ({
+      id: v.video_id,
+      url: `https://www.tiktok.com/@${config.tiktok}/video/${v.video_id}`,
+      title: (v.title || '').trim(),
+    }));
+  }
+  return null;
+}
+
 async function checkTikTok() {
   if (!config.tiktok) return;
   const user = encodeURIComponent(config.tiktok);
 
-  const info = await fetchJson(`https://www.tikwm.com/api/user/info?unique_id=${user}`);
+  // Cheap change-detector: videoCount stays available even when list endpoints are blocked.
+  const info = await fetchJson(`https://www.tikwm.com/api/user/info?unique_id=${user}`, 2);
   const count = info?.data?.stats?.videoCount;
-  if (typeof count !== 'number') { console.log('tiktok: info unavailable, will retry next run'); return; }
+  const haveCount = typeof count === 'number';
 
-  if (state.tiktokCount == null) {
-    state.tiktokCount = count;
-    console.log(`tiktok: baseline videoCount=${count}`);
-    return;
-  }
-  if (count <= state.tiktokCount) {
-    if (count < state.tiktokCount) { state.tiktokCount = count; console.log(`tiktok: count dropped to ${count} (deleted post)`); }
+  if (haveCount && state.tiktokCount != null && count <= state.tiktokCount) {
+    if (count < state.tiktokCount) { state.tiktokCount = count; console.log(`tiktok: count dropped to ${count} (post deleted)`); }
     else console.log(`tiktok: no new posts (${count})`);
     return;
   }
+  if (haveCount && state.tiktokCount != null) console.log(`tiktok: videoCount ${state.tiktokCount} -> ${count}`);
 
-  console.log(`tiktok: videoCount ${state.tiktokCount} -> ${count}, fetching new post(s)`);
-  const posts = await fetchJson(`https://www.tikwm.com/api/user/posts?unique_id=${user}&count=10`, 2);
-  const videos = posts?.data?.videos;
+  const list = await tiktokList(user);
 
-  if (Array.isArray(videos) && videos.length) {
-    const lastIdx = state.tiktokLast ? videos.findIndex((v) => v.video_id === state.tiktokLast) : -1;
-    const fresh = (lastIdx === -1 ? videos.slice(0, count - state.tiktokCount) : videos.slice(0, lastIdx)).reverse();
-    let posted = 0;
-    for (const v of fresh) {
-      const title = (v.title || '').trim();
-      const url = `https://www.tiktok.com/@${config.tiktok}/video/${v.video_id}`;
+  if (!list) {
+    // No list source available. Still announce if we know something new exists.
+    if (haveCount && state.tiktokCount != null && count > state.tiktokCount) {
+      const n = count - state.tiktokCount;
       const ok = await post(
         WEBHOOKS.tiktok,
-        `${roleMentions(config.roles.video)} 🎵 **Gio just dropped a new TikTok!**\n${title ? `> ${title}\n` : ''}${url}`,
+        `${roleMentions(config.roles.video)} 🎵 **Gio just dropped ${n > 1 ? `${n} new TikToks` : 'a new TikTok'}!**\nhttps://www.tiktok.com/@${config.tiktok}`,
         config.roles.video
       );
-      if (!ok) { console.log('tiktok: post failed — state not advanced, will retry'); return; }
-      console.log(`tiktok: posted ${v.video_id}`);
-      state.tiktokLast = v.video_id;
-      posted++;
-    }
-    if (posted) state.tiktokCount = count;
+      if (ok) { state.tiktokCount = count; console.log('tiktok: announced via profile-link fallback'); }
+      else console.log('tiktok: fallback post failed — state not advanced, will retry');
+    } else console.log('tiktok: no source available, will retry next run');
     return;
   }
 
-  // posts endpoint blocked — announce anyway with a profile link
-  console.log('tiktok: posts endpoint unavailable, announcing with profile link');
-  const n = count - state.tiktokCount;
-  const ok = await post(
-    WEBHOOKS.tiktok,
-    `${roleMentions(config.roles.video)} 🎵 **Gio just dropped ${n > 1 ? `${n} new TikToks` : 'a new TikTok'}!**\nhttps://www.tiktok.com/@${config.tiktok}`,
-    config.roles.video
-  );
-  if (ok) { state.tiktokCount = count; console.log('tiktok: announced via fallback'); }
-  else console.log('tiktok: fallback post failed — state not advanced, will retry');
+  if (!state.tiktokLast) {
+    state.tiktokLast = list[0].id;
+    if (haveCount) state.tiktokCount = count;
+    console.log(`tiktok: baseline set to ${list[0].id}`);
+    return;
+  }
+
+  const idx = list.findIndex((v) => v.id === state.tiktokLast);
+  if (idx === 0) {
+    console.log('tiktok: no new posts');
+    if (haveCount) state.tiktokCount = count;
+    return;
+  }
+  // idx === -1 means last-seen fell off the feed; announce only the newest to avoid a spam burst.
+  const fresh = (idx === -1 ? [list[0]] : list.slice(0, idx)).reverse();
+
+  for (const v of fresh) {
+    const ok = await post(
+      WEBHOOKS.tiktok,
+      `${roleMentions(config.roles.video)} 🎵 **Gio just dropped a new TikTok!**\n${v.title ? `> ${v.title}\n` : ''}${v.url}`,
+      config.roles.video
+    );
+    if (!ok) { console.log('tiktok: post failed — state not advanced, will retry'); return; }
+    console.log(`tiktok: posted ${v.id}`);
+    state.tiktokLast = v.id;
+  }
+  if (haveCount) state.tiktokCount = count;
 }
 
 // ---------- Twitch (decapi.me, no auth) ----------
