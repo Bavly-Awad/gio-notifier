@@ -1,6 +1,14 @@
 // Social notifier for the lightskingio Discord server.
 // Runs on a GitHub Actions cron. No dependencies — Node 20+ global fetch only.
-// State (last-seen post ids / live status) persists in state.json, committed back by the workflow.
+// State (last-seen ids / live status) persists in state.json, committed back by the workflow.
+//
+// Design notes:
+// - State is ONLY advanced after a webhook post succeeds, so a failed post is retried
+//   next run instead of being silently lost.
+// - TikTok: tikwm's /api/user/posts sits behind a Cloudflare challenge much of the time,
+//   but /api/user/info stays up. So we poll the cheap info endpoint for videoCount and
+//   only reach for the (blocked-prone) posts endpoint when a new upload actually exists.
+//   If posts is unavailable we still announce, just with a profile link instead of a direct one.
 
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -13,74 +21,123 @@ const WEBHOOKS = {
   youtube: process.env.WEBHOOK_YOUTUBE,
 };
 
-const UA = { 'User-Agent': 'Mozilla/5.0 (gio-notifier)' };
+const UA = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36',
+};
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function roleMentions(ids) {
-  return ids.map((id) => `<@&${id}>`).join(' ');
+async function fetchText(url, tries = 3) {
+  let last = '';
+  for (let i = 0; i < tries; i++) {
+    try {
+      const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(20000) });
+      const text = await res.text();
+      if (res.ok) return text;
+      last = `HTTP ${res.status}`;
+    } catch (e) { last = e.message; }
+    if (i < tries - 1) await sleep(2000 * (i + 1));
+  }
+  console.log(`  fetch failed (${last}): ${url.split('?')[0]}`);
+  return null;
 }
 
+async function fetchJson(url, tries = 3) {
+  const text = await fetchText(url, tries);
+  if (text === null) return null;
+  try { return JSON.parse(text); } catch { console.log(`  non-JSON response: ${url.split('?')[0]}`); return null; }
+}
+
+const roleMentions = (ids) => ids.map((id) => `<@&${id}>`).join(' ');
+
+// Returns true only when Discord accepted the message.
 async function post(webhook, content, roleIds) {
-  if (!webhook) { console.log('skip post — webhook not configured'); return; }
-  const res = await fetch(webhook, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      content,
-      allowed_mentions: { parse: [], roles: roleIds },
-    }),
-  });
-  if (!res.ok) console.error(`webhook post failed: ${res.status} ${await res.text()}`);
+  if (!webhook) { console.log('  no webhook configured — not posting'); return false; }
+  try {
+    const res = await fetch(webhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content, allowed_mentions: { parse: [], roles: roleIds } }),
+      signal: AbortSignal.timeout(20000),
+    });
+    if (!res.ok) { console.error(`  webhook post failed: ${res.status} ${await res.text()}`); return false; }
+    return true;
+  } catch (e) { console.error(`  webhook post error: ${e.message}`); return false; }
 }
 
-// ---------- TikTok (via tikwm.com public API) ----------
+// ---------- TikTok ----------
 async function checkTikTok() {
   if (!config.tiktok) return;
-  const res = await fetch(
-    `https://www.tikwm.com/api/user/posts?unique_id=${encodeURIComponent(config.tiktok)}&count=10`,
-    { headers: UA }
+  const user = encodeURIComponent(config.tiktok);
+
+  const info = await fetchJson(`https://www.tikwm.com/api/user/info?unique_id=${user}`);
+  const count = info?.data?.stats?.videoCount;
+  if (typeof count !== 'number') { console.log('tiktok: info unavailable, will retry next run'); return; }
+
+  if (state.tiktokCount == null) {
+    state.tiktokCount = count;
+    console.log(`tiktok: baseline videoCount=${count}`);
+    return;
+  }
+  if (count <= state.tiktokCount) {
+    if (count < state.tiktokCount) { state.tiktokCount = count; console.log(`tiktok: count dropped to ${count} (deleted post)`); }
+    else console.log(`tiktok: no new posts (${count})`);
+    return;
+  }
+
+  console.log(`tiktok: videoCount ${state.tiktokCount} -> ${count}, fetching new post(s)`);
+  const posts = await fetchJson(`https://www.tikwm.com/api/user/posts?unique_id=${user}&count=10`, 2);
+  const videos = posts?.data?.videos;
+
+  if (Array.isArray(videos) && videos.length) {
+    const lastIdx = state.tiktokLast ? videos.findIndex((v) => v.video_id === state.tiktokLast) : -1;
+    const fresh = (lastIdx === -1 ? videos.slice(0, count - state.tiktokCount) : videos.slice(0, lastIdx)).reverse();
+    let posted = 0;
+    for (const v of fresh) {
+      const title = (v.title || '').trim();
+      const url = `https://www.tiktok.com/@${config.tiktok}/video/${v.video_id}`;
+      const ok = await post(
+        WEBHOOKS.tiktok,
+        `${roleMentions(config.roles.video)} 🎵 **Gio just dropped a new TikTok!**\n${title ? `> ${title}\n` : ''}${url}`,
+        config.roles.video
+      );
+      if (!ok) { console.log('tiktok: post failed — state not advanced, will retry'); return; }
+      console.log(`tiktok: posted ${v.video_id}`);
+      state.tiktokLast = v.video_id;
+      posted++;
+    }
+    if (posted) state.tiktokCount = count;
+    return;
+  }
+
+  // posts endpoint blocked — announce anyway with a profile link
+  console.log('tiktok: posts endpoint unavailable, announcing with profile link');
+  const n = count - state.tiktokCount;
+  const ok = await post(
+    WEBHOOKS.tiktok,
+    `${roleMentions(config.roles.video)} 🎵 **Gio just dropped ${n > 1 ? `${n} new TikToks` : 'a new TikTok'}!**\nhttps://www.tiktok.com/@${config.tiktok}`,
+    config.roles.video
   );
-  const json = await res.json();
-  const videos = json?.data?.videos;
-  if (!Array.isArray(videos) || videos.length === 0) {
-    console.log('tiktok: no data (api may be rate-limited), skipping');
-    return;
-  }
-  // videos come newest-first
-  const newest = videos[0].video_id;
-  if (!state.tiktokLast) {
-    state.tiktokLast = newest;
-    console.log(`tiktok: baseline set to ${newest}`);
-    return;
-  }
-  const lastIdx = videos.findIndex((v) => v.video_id === state.tiktokLast);
-  const fresh = lastIdx === -1 ? [videos[0]] : videos.slice(0, lastIdx);
-  for (const v of fresh.reverse()) {
-    const title = (v.title || '').trim();
-    const url = `https://www.tiktok.com/@${config.tiktok}/video/${v.video_id}`;
-    await post(
-      WEBHOOKS.tiktok,
-      `${roleMentions(config.roles.video)} 🎵 **Gio just dropped a new TikTok!**\n${title ? `> ${title}\n` : ''}${url}`,
-      config.roles.video
-    );
-    console.log(`tiktok: posted ${v.video_id}`);
-  }
-  state.tiktokLast = newest;
+  if (ok) { state.tiktokCount = count; console.log('tiktok: announced via fallback'); }
+  else console.log('tiktok: fallback post failed — state not advanced, will retry');
 }
 
-// ---------- Twitch (via decapi.me, no auth) ----------
+// ---------- Twitch (decapi.me, no auth) ----------
 async function checkTwitch() {
-  if (!config.twitch) { console.log('twitch: not configured, skipping'); return; }
-  const res = await fetch(`https://decapi.me/twitch/uptime/${encodeURIComponent(config.twitch)}`, { headers: UA });
-  const text = (await res.text()).trim();
-  const isLive = !/is offline|error|not found|no user/i.test(text) && /\d/.test(text);
+  if (!config.twitch) { console.log('twitch: not configured'); return; }
+  const text = await fetchText(`https://decapi.me/twitch/uptime/${encodeURIComponent(config.twitch)}`);
+  if (text === null) { console.log('twitch: unavailable, will retry'); return; }
+  const t = text.trim();
+  const isLive = !/is offline|error|not found|no user|unable/i.test(t) && /\d/.test(t);
+
   if (isLive && !state.twitchLive) {
-    await post(
+    const ok = await post(
       WEBHOOKS.live,
       `${roleMentions(config.roles.live)} 🔴 **GIO IS LIVE ON TWITCH!** Get in here 👇\nhttps://twitch.tv/${config.twitch}`,
       config.roles.live
     );
+    if (!ok) { console.log('twitch: post failed — state not advanced, will retry'); return; }
     console.log('twitch: went live, posted');
-    // also surface it as a server event (banner at top of channel list)
+
     if (process.env.BOT_TOKEN && config.contest?.guildId) {
       const start = new Date(Date.now() + 2 * 60 * 1000).toISOString();
       const end = new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString();
@@ -96,47 +153,49 @@ async function checkTwitch() {
           privacy_level: 2,
           description: 'Stream is up — pull up!',
         }),
-      });
-      console.log(`twitch: scheduled event ${r.ok ? 'created' : 'failed http ' + r.status}`);
+      }).catch(() => null);
+      console.log(`twitch: scheduled event ${r?.ok ? 'created' : 'skipped'}`);
     }
+    state.twitchLive = true;
   } else {
-    console.log(`twitch: live=${isLive} (was ${!!state.twitchLive})`);
+    if (!isLive && state.twitchLive) console.log('twitch: stream ended');
+    else console.log(`twitch: live=${isLive}`);
+    state.twitchLive = isLive;
   }
-  state.twitchLive = isLive;
 }
 
-// ---------- YouTube (via official RSS feed) ----------
+// ---------- YouTube (official RSS) ----------
 async function checkYouTube() {
-  if (!config.youtubeChannelId) { console.log('youtube: not configured, skipping'); return; }
-  const res = await fetch(
-    `https://www.youtube.com/feeds/videos.xml?channel_id=${config.youtubeChannelId}`,
-    { headers: UA }
-  );
-  if (!res.ok) { console.log(`youtube: feed http ${res.status}, skipping`); return; }
-  const xml = await res.text();
+  if (!config.youtubeChannelId) { console.log('youtube: not configured'); return; }
+  const xml = await fetchText(`https://www.youtube.com/feeds/videos.xml?channel_id=${config.youtubeChannelId}`);
+  if (xml === null) { console.log('youtube: feed unavailable, will retry'); return; }
   const entries = [...xml.matchAll(/<entry>[\s\S]*?<yt:videoId>(.*?)<\/yt:videoId>[\s\S]*?<title>(.*?)<\/title>[\s\S]*?<\/entry>/g)];
-  if (entries.length === 0) return;
-  const [, newestId, newestTitle] = entries[0];
+  if (!entries.length) { console.log('youtube: no entries'); return; }
+
+  const [, newestId] = entries[0];
   if (!state.youtubeLast) {
     state.youtubeLast = newestId;
     console.log(`youtube: baseline set to ${newestId}`);
     return;
   }
+  if (entries[0][1] === state.youtubeLast) { console.log('youtube: no new videos'); return; }
+
   const lastIdx = entries.findIndex(([, id]) => id === state.youtubeLast);
-  const fresh = lastIdx === -1 ? [entries[0]] : entries.slice(0, lastIdx);
-  for (const [, id, title] of fresh.reverse()) {
-    await post(
+  const fresh = (lastIdx === -1 ? [entries[0]] : entries.slice(0, lastIdx)).reverse();
+  for (const [, id, title] of fresh) {
+    const ok = await post(
       WEBHOOKS.youtube,
       `${roleMentions(config.roles.video)} ▶️ **New Gio video on YouTube!**\n> ${title}\nhttps://youtu.be/${id}`,
       config.roles.video
     );
+    if (!ok) { console.log('youtube: post failed — state not advanced, will retry'); return; }
     console.log(`youtube: posted ${id}`);
+    state.youtubeLast = id;
   }
-  state.youtubeLast = newestId;
 }
 
 const results = await Promise.allSettled([checkTikTok(), checkTwitch(), checkYouTube()]);
-for (const r of results) if (r.status === 'rejected') console.error('check failed:', r.reason);
+for (const r of results) if (r.status === 'rejected') console.error('check crashed:', r.reason);
 
 writeFileSync('state.json', JSON.stringify(state, null, 2) + '\n');
 console.log('done');
