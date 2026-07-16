@@ -49,6 +49,40 @@ async function fetchJson(url, tries = 3) {
 
 const roleMentions = (ids) => ids.map((id) => `<@&${id}>`).join(' ');
 
+// ---------- source health ----------
+// A source that quietly stops working is the dangerous case: no pings, no complaints.
+// Track consecutive failures per source and alert staff once when one goes dark.
+state.health = state.health || {};
+const ALERT_AFTER = 12; // ~1 hour at the 5-minute cron
+
+function noteFailure(source) {
+  const h = (state.health[source] = state.health[source] || { fails: 0, alerted: false });
+  h.fails++;
+}
+function noteSuccess(source) {
+  const h = state.health[source];
+  if (h?.alerted) console.log(`${source}: recovered after ${h.fails} failed checks`);
+  state.health[source] = { fails: 0, alerted: false };
+}
+
+async function reportHealth() {
+  const staff = config.staffChannelId;
+  if (!staff || !process.env.BOT_TOKEN) return;
+  for (const [source, h] of Object.entries(state.health)) {
+    if (h.fails >= ALERT_AFTER && !h.alerted) {
+      const res = await fetch(`https://discord.com/api/v10/channels/${staff}/messages`, {
+        method: 'POST',
+        headers: { Authorization: `Bot ${process.env.BOT_TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `⚠️ **Notifier warning:** the **${source}** source has failed ${h.fails} checks in a row (~${Math.round(h.fails * 5 / 60)}h). Alerts for it may be delayed. It keeps retrying — nothing is lost, and I'll confirm here when it recovers.`,
+          allowed_mentions: { parse: [] },
+        }),
+      }).catch(() => null);
+      if (res?.ok) { h.alerted = true; console.log(`health: alerted staff about ${source}`); }
+    }
+  }
+}
+
 // Returns true only when Discord accepted the message.
 async function post(webhook, content, roleIds) {
   if (!webhook) { console.log('  no webhook configured — not posting'); return false; }
@@ -100,6 +134,7 @@ async function checkTikTok() {
   const info = await fetchJson(`https://www.tikwm.com/api/user/info?unique_id=${user}`, 2);
   const count = info?.data?.stats?.videoCount;
   const haveCount = typeof count === 'number';
+  if (haveCount) noteSuccess('tiktok'); else noteFailure('tiktok');
 
   if (haveCount && state.tiktokCount != null && count <= state.tiktokCount) {
     if (count < state.tiktokCount) { state.tiktokCount = count; console.log(`tiktok: count dropped to ${count} (post deleted)`); }
@@ -154,13 +189,47 @@ async function checkTikTok() {
   if (haveCount) state.tiktokCount = count;
 }
 
-// ---------- Twitch (decapi.me, no auth) ----------
+// ---------- Twitch ----------
+// Returns true (live), false (offline), or null (unknown — never guess, a false
+// positive would ping the whole server for a stream that isn't running).
+async function twitchLive(login) {
+  // Primary: Twitch's own GQL endpoint (structured, unambiguous).
+  try {
+    const r = await fetch('https://gql.twitch.tv/gql', {
+      method: 'POST',
+      headers: { 'Client-ID': 'kimne78kx3ncx6brgo4mv6wki5h1ko', 'Content-Type': 'application/json', ...UA },
+      body: JSON.stringify([{
+        operationName: 'UseLive',
+        variables: { channelLogin: login },
+        extensions: { persistedQuery: { version: 1, sha256Hash: '639d5f11bfb8bf3053b424d9ef650d04c4ebb7d94711d644afb08fe9a0fad5d9' } },
+      }]),
+      signal: AbortSignal.timeout(20000),
+    });
+    if (r.ok) {
+      const data = (await r.json())?.[0]?.data;
+      if (data && 'user' in data) {
+        if (data.user === null) { console.log(`twitch: channel "${login}" not found — check config.twitch`); return null; }
+        return !!data.user.stream;
+      }
+    }
+    console.log(`  twitch gql: unusable response (HTTP ${r.status}), trying decapi`);
+  } catch (e) { console.log(`  twitch gql failed (${e.message}), trying decapi`); }
+
+  // Fallback: decapi, parsed strictly — anything unrecognized is "unknown", not "live".
+  const text = await fetchText(`https://decapi.me/twitch/uptime/${encodeURIComponent(login)}`, 2);
+  if (text === null) return null;
+  const t = text.trim();
+  if (/^\d+\s+(second|minute|hour|day)/i.test(t)) return true;
+  if (/is offline/i.test(t)) return false;
+  console.log(`  twitch decapi: unrecognized response "${t.slice(0, 60)}" — treating as unknown`);
+  return null;
+}
+
 async function checkTwitch() {
   if (!config.twitch) { console.log('twitch: not configured'); return; }
-  const text = await fetchText(`https://decapi.me/twitch/uptime/${encodeURIComponent(config.twitch)}`);
-  if (text === null) { console.log('twitch: unavailable, will retry'); return; }
-  const t = text.trim();
-  const isLive = !/is offline|error|not found|no user|unable/i.test(t) && /\d/.test(t);
+  const isLive = await twitchLive(config.twitch);
+  if (isLive === null) { noteFailure('twitch'); console.log('twitch: status unknown, will retry'); return; }
+  noteSuccess('twitch');
 
   if (isLive && !state.twitchLive) {
     const ok = await post(
@@ -198,27 +267,43 @@ async function checkTwitch() {
 }
 
 // ---------- YouTube (official RSS) ----------
+const decodeEntities = (s) => s
+  .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(+d))
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+  .replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&amp;/g, '&'); // last, so "&amp;lt;" doesn't become "<"
+
 async function checkYouTube() {
   if (!config.youtubeChannelId) { console.log('youtube: not configured'); return; }
   const xml = await fetchText(`https://www.youtube.com/feeds/videos.xml?channel_id=${config.youtubeChannelId}`);
-  if (xml === null) { console.log('youtube: feed unavailable, will retry'); return; }
-  const entries = [...xml.matchAll(/<entry>[\s\S]*?<yt:videoId>(.*?)<\/yt:videoId>[\s\S]*?<title>(.*?)<\/title>[\s\S]*?<\/entry>/g)];
-  if (!entries.length) { console.log('youtube: no entries'); return; }
+  if (xml === null) { noteFailure('youtube'); console.log('youtube: feed unavailable, will retry'); return; }
+  if (!xml.includes('<feed')) {
+    noteFailure('youtube');
+    console.log('youtube: response is not an RSS feed (bad channel id?) — will retry');
+    return;
+  }
+  noteSuccess('youtube');
 
-  const [, newestId] = entries[0];
+  const entries = [...xml.matchAll(/<entry>[\s\S]*?<yt:videoId>(.*?)<\/yt:videoId>[\s\S]*?<title>(.*?)<\/title>[\s\S]*?<\/entry>/g)];
+  if (!entries.length) { console.log('youtube: feed has no videos yet'); return; }
+
+  const newestId = entries[0][1];
   if (!state.youtubeLast) {
     state.youtubeLast = newestId;
     console.log(`youtube: baseline set to ${newestId}`);
     return;
   }
-  if (entries[0][1] === state.youtubeLast) { console.log('youtube: no new videos'); return; }
+  if (newestId === state.youtubeLast) { console.log('youtube: no new videos'); return; }
 
   const lastIdx = entries.findIndex(([, id]) => id === state.youtubeLast);
+  // last-seen missing from the feed => only announce the newest, never a backlog burst
   const fresh = (lastIdx === -1 ? [entries[0]] : entries.slice(0, lastIdx)).reverse();
-  for (const [, id, title] of fresh) {
+  for (const [, id, rawTitle] of fresh) {
+    const title = decodeEntities(rawTitle).trim();
     const ok = await post(
       WEBHOOKS.youtube,
-      `${roleMentions(config.roles.video)} ▶️ **New Gio video on YouTube!**\n> ${title}\nhttps://youtu.be/${id}`,
+      `${roleMentions(config.roles.video)} ▶️ **New Gio video on YouTube!**\n${title ? `> ${title}\n` : ''}https://youtu.be/${id}`,
       config.roles.video
     );
     if (!ok) { console.log('youtube: post failed — state not advanced, will retry'); return; }
@@ -227,8 +312,16 @@ async function checkYouTube() {
   }
 }
 
+const names = ['tiktok', 'twitch', 'youtube'];
 const results = await Promise.allSettled([checkTikTok(), checkTwitch(), checkYouTube()]);
-for (const r of results) if (r.status === 'rejected') console.error('check crashed:', r.reason);
+results.forEach((r, i) => {
+  if (r.status === 'rejected') {
+    console.error(`${names[i]} check crashed:`, r.reason);
+    noteFailure(names[i]); // a thrown check is a failed check
+  }
+});
 
+await reportHealth();
 writeFileSync('state.json', JSON.stringify(state, null, 2) + '\n');
+console.log('health:', JSON.stringify(state.health));
 console.log('done');
