@@ -2,5 +2,19 @@
   "tiktokLast": "7663232041340636437",
   "youtubeLast": "y_x-MsvyS3Q",
   "twitchLive": false,
-  "tiktokCount": 174
+  "tiktokCount": 174,
+  "health": {
+    "twitch": {
+      "fails": 0,
+      "alerted": false
+    },
+    "youtube": {
+      "fails": 0,
+      "alerted": false
+    },
+    "tiktok": {
+      "fails": 0,
+      "alerted": false
+    }
+  }
 }
