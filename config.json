@@ -3,13 +3,13 @@
   "twitch": "thelightskingio",
   "youtubeChannelId": "UCzbtrAs2ckrEqhftiiyhVsg",
   "roles": {
-    "video": ["1521684557185679560"],
-    "live": ["1521696776946581504"]
+    "video": ["1527114619829620741"],
+    "live": ["1527114619829620739"]
   },
   "contest": {
-    "guildId": "1521507809206997002",
-    "clipsChannelId": "1521509791221158009",
-    "clipEditorRoleId": "1523938165008629851"
+    "guildId": "1527114619829620736",
+    "clipsChannelId": "1527114621247291507",
+    "clipEditorRoleId": "1527114619829620737"
   },
   "xp": {
     "channels": [
