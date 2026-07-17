@@ -54,6 +54,9 @@ const roleMentions = (ids) => ids.map((id) => `<@&${id}>`).join(' ');
 // Track consecutive failures per source and alert staff once when one goes dark.
 state.health = state.health || {};
 const ALERT_AFTER = 12; // ~1 hour at the 5-minute cron
+// rss-bridge caches, so its feed can trail a fresh upload by a few minutes. Wait this many
+// runs (~30 min) for the exact link before falling back to a profile-link announcement.
+const FEED_LAG_PATIENCE = 6;
 
 function noteFailure(source) {
   const h = (state.health[source] = state.health[source] || { fails: 0, alerted: false });
@@ -169,7 +172,29 @@ async function checkTikTok() {
 
   const idx = list.findIndex((v) => v.id === state.tiktokLast);
   if (idx === 0) {
+    // The feed's newest is what we already announced. If videoCount says a newer post
+    // exists, the feed is just lagging (rss-bridge caches) — do NOT advance the count,
+    // or the announcement would be suppressed forever once the feed catches up.
+    if (haveCount && state.tiktokCount != null && count > state.tiktokCount) {
+      state.tiktokWait = (state.tiktokWait || 0) + 1;
+      if (state.tiktokWait <= FEED_LAG_PATIENCE) {
+        console.log(`tiktok: videoCount=${count} says a new post exists but the feed is stale — waiting (${state.tiktokWait}/${FEED_LAG_PATIENCE})`);
+        return;
+      }
+      // Feed never caught up (deleted/private post, or bridge is broken). Announce anyway.
+      console.log('tiktok: feed never caught up — announcing via profile link');
+      const n = count - state.tiktokCount;
+      const ok = await post(
+        WEBHOOKS.tiktok,
+        `${roleMentions(config.roles.video)} 🎵 **Gio just dropped ${n > 1 ? `${n} new TikToks` : 'a new TikTok'}!**\nhttps://www.tiktok.com/@${config.tiktok}`,
+        config.roles.video
+      );
+      if (ok) { state.tiktokCount = count; state.tiktokWait = 0; }
+      else console.log('tiktok: fallback post failed — state not advanced, will retry');
+      return;
+    }
     console.log('tiktok: no new posts');
+    state.tiktokWait = 0;
     if (haveCount) state.tiktokCount = count;
     return;
   }
@@ -186,6 +211,7 @@ async function checkTikTok() {
     console.log(`tiktok: posted ${v.id}`);
     state.tiktokLast = v.id;
   }
+  state.tiktokWait = 0;
   if (haveCount) state.tiktokCount = count;
 }
 
