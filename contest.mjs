@@ -28,6 +28,9 @@ const entries = messages.filter((m) =>
   (m.attachments?.length > 0 || m.embeds?.length > 0 || /https?:\/\//.test(m.content))
 );
 
+// everyone who entered this week gets pinged with the results (capped to keep it sane)
+const participants = [...new Set(entries.map((m) => m.author.id))].slice(0, 20);
+
 let announcement = '';
 if (entries.length === 0) {
   announcement = 'No entries last week — this is your week to take it. 👀\n\n';
@@ -37,6 +40,7 @@ if (entries.length === 0) {
   const winner = entries.reduce((a, b) => (score(b) > score(a) ? b : a));
   const pts = score(winner);
   if (pts > 0) {
+    if (!participants.includes(winner.author.id)) participants.unshift(winner.author.id);
     await api(`/guilds/${guildId}/members/${winner.author.id}/roles/${clipEditorRoleId}`, {
       method: 'PUT',
     });
@@ -51,17 +55,25 @@ if (entries.length === 0) {
   }
 }
 
-// --- announce the new round ---
+// --- announce the new round, pinging the people who care ---
+// - this week's entrants (they want the results)
+// - the ✂️ Clip Editor role (past winners: defend the crown)
+// The bot's admin perms let it ping the role even though members can't.
+const entrantLine = participants.length
+  ? `🎬 This week's entrants: ${participants.map((id) => `<@${id}>`).join(' ')}\n\n`
+  : '';
 await api(`/channels/${clipsChannelId}/messages`, {
   method: 'POST',
   body: JSON.stringify({
     content:
       announcement +
+      entrantLine +
       `# ✂️ CLIP OF THE WEEK — new round starts NOW\n` +
+      `<@&${clipEditorRoleId}> — you hold the crown. Defend it. 👑\n\n` +
       `Post your best Gio clip or edit in this channel. The entry with the **most reactions by next Friday** wins:\n` +
       `> 🏆 The ✂️ Clip Editor role\n> 📣 A shoutout right here\n\n` +
       `One rule: it has to be YOUR edit. Cook. 🔥`,
-    allowed_mentions: { parse: ['users'] },
+    allowed_mentions: { parse: [], users: participants, roles: [clipEditorRoleId] },
   }),
 });
-console.log('new round announced');
+console.log(`new round announced (pinged ${participants.length} entrants + Clip Editor role)`);
