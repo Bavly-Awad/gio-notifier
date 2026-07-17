@@ -2,19 +2,11 @@
   "tiktokLast": "7663232041340636437",
   "youtubeLast": "y_x-MsvyS3Q",
   "twitchLive": false,
-  "tiktokCount": 175,
+  "tiktokCount": 174,
+  "tiktokWait": 0,
   "health": {
-    "twitch": {
-      "fails": 0,
-      "alerted": false
-    },
-    "youtube": {
-      "fails": 0,
-      "alerted": false
-    },
-    "tiktok": {
-      "fails": 0,
-      "alerted": false
-    }
+    "twitch": { "fails": 0, "alerted": false },
+    "youtube": { "fails": 0, "alerted": false },
+    "tiktok": { "fails": 0, "alerted": false }
   }
 }
