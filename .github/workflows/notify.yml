@@ -1,8 +1,10 @@
 name: social-notifier
 
+# Social alerts now run inside Gio Bot on Render (reliable 3-minute timer).
+# GitHub's scheduled crons are throttled to roughly hourly on free repos, which
+# made alerts late. Kept here as a manual-only backup — no schedule, so it can
+# never double-post alongside the bot.
 on:
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
