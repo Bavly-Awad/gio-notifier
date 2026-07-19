@@ -1,0 +1,2109 @@
+{
+  "takenAt": "2026-07-19T08:22:49.643Z",
+  "guild": {
+    "id": "1527114619829620736",
+    "name": "Lightskin Gio Server",
+    "icon": "e519f4d06ce22a01f22b136f3de520cf",
+    "description": null,
+    "home_header": null,
+    "splash": null,
+    "discovery_splash": null,
+    "features": [
+      "AUDIO_BITRATE_128_KBPS",
+      "NEWS",
+      "ANIMATED_ICON",
+      "INVITE_SPLASH",
+      "WELCOME_SCREEN_ENABLED",
+      "MEMBER_VERIFICATION_GATE_ENABLED",
+      "STAGE_CHANNEL_VIEWERS_50",
+      "GUILD_ONBOARDING_HAS_PROMPTS",
+      "TIERLESS_BOOSTING",
+      "GUILD_ONBOARDING",
+      "AUTO_MODERATION",
+      "VIDEO_QUALITY_720_60FPS",
+      "COMMUNITY",
+      "GUILD_ONBOARDING_EVER_ENABLED",
+      "VIDEO_BITRATE_ENHANCED"
+    ],
+    "banner": null,
+    "owner_id": "1481705917509668864",
+    "application_id": null,
+    "region": "brazil",
+    "afk_channel_id": null,
+    "afk_timeout": 300,
+    "system_channel_id": "1527114620974792745",
+    "system_channel_flags": 1,
+    "widget_enabled": false,
+    "widget_channel_id": null,
+    "verification_level": 2,
+    "verification_role_id": null,
+    "roles": [
+      {
+        "id": "1527114619829620736",
+        "name": "@everyone",
+        "description": null,
+        "permissions": "139690626625",
+        "position": 0,
+        "color": 0,
+        "colors": {
+          "primary_color": 0,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527114619829620737",
+        "name": "✂️ Clip Editor",
+        "description": null,
+        "permissions": "0",
+        "position": 5,
+        "color": 3447003,
+        "colors": {
+          "primary_color": 3447003,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": true,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527114619829620738",
+        "name": "⭐ OG Fan",
+        "description": null,
+        "permissions": "0",
+        "position": 6,
+        "color": 10181046,
+        "colors": {
+          "primary_color": 10181046,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": true,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527114619829620739",
+        "name": "Twitch ping",
+        "description": null,
+        "permissions": "0",
+        "position": 7,
+        "color": 7419530,
+        "colors": {
+          "primary_color": 7419530,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 1
+      },
+      {
+        "id": "1527114619829620740",
+        "name": "News Ping",
+        "description": null,
+        "permissions": "0",
+        "position": 8,
+        "color": 6323595,
+        "colors": {
+          "primary_color": 6323595,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 1
+      },
+      {
+        "id": "1527114619829620741",
+        "name": "Video Ping",
+        "description": null,
+        "permissions": "0",
+        "position": 9,
+        "color": 1535912,
+        "colors": {
+          "primary_color": 1535912,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 1
+      },
+      {
+        "id": "1527114619829620742",
+        "name": "MOD",
+        "description": null,
+        "permissions": "1116720868486",
+        "position": 10,
+        "color": 3066993,
+        "colors": {
+          "primary_color": 3066993,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": true,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527114619829620743",
+        "name": "ADMIN",
+        "description": null,
+        "permissions": "8864258447638527",
+        "position": 12,
+        "color": 15548997,
+        "colors": {
+          "primary_color": 15548997,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": true,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527114619829620744",
+        "name": "Owner",
+        "description": null,
+        "permissions": "8864258447638527",
+        "position": 13,
+        "color": 16711680,
+        "colors": {
+          "primary_color": 16711680,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527115138468155406",
+        "name": "lightskingio",
+        "description": null,
+        "permissions": "8",
+        "position": 11,
+        "color": 0,
+        "colors": {
+          "primary_color": 0,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": true,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "tags": {
+          "bot_id": "1523937063173361744"
+        },
+        "flags": 0
+      },
+      {
+        "id": "1527378202077691954",
+        "name": "🌱 Regular",
+        "description": null,
+        "permissions": "414568533568",
+        "position": 4,
+        "color": 3066993,
+        "colors": {
+          "primary_color": 3066993,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527378202828214282",
+        "name": "🏆 Legend",
+        "description": null,
+        "permissions": "414568533568",
+        "position": 3,
+        "color": 15105570,
+        "colors": {
+          "primary_color": 15105570,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527378203524730923",
+        "name": "💎 Day One",
+        "description": null,
+        "permissions": "414568533568",
+        "position": 2,
+        "color": 1752220,
+        "colors": {
+          "primary_color": 1752220,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527379167505547385",
+        "name": "lightskin",
+        "description": null,
+        "permissions": "139690626624",
+        "position": 1,
+        "color": 15843965,
+        "colors": {
+          "primary_color": 15843965,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527515119381119038",
+        "name": "🤖 Gio Bot",
+        "description": null,
+        "permissions": "0",
+        "position": 14,
+        "color": 16107596,
+        "colors": {
+          "primary_color": 16107596,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": true,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527533238921330748",
+        "name": "👑 GIO",
+        "description": null,
+        "permissions": "0",
+        "position": 15,
+        "color": 15844367,
+        "colors": {
+          "primary_color": 15844367,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": true,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      },
+      {
+        "id": "1527693619555860741",
+        "name": "Server Booster",
+        "description": null,
+        "permissions": "139690626624",
+        "position": 1,
+        "color": 16023551,
+        "colors": {
+          "primary_color": 16023551,
+          "secondary_color": 11816191,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": true,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "tags": {
+          "premium_subscriber": null
+        },
+        "flags": 0
+      },
+      {
+        "id": "1527800686299840615",
+        "name": ".fmbot",
+        "description": null,
+        "permissions": "275415092288",
+        "position": 1,
+        "color": 0,
+        "colors": {
+          "primary_color": 0,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": false,
+        "managed": true,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "tags": {
+          "bot_id": "356268235697553409"
+        },
+        "flags": 0
+      },
+      {
+        "id": "1527802566799392968",
+        "name": "💖 BOOSTER",
+        "description": null,
+        "permissions": "139690626625",
+        "position": 1,
+        "color": 16023551,
+        "colors": {
+          "primary_color": 16023551,
+          "secondary_color": null,
+          "tertiary_color": null
+        },
+        "hoist": true,
+        "managed": false,
+        "mentionable": false,
+        "icon": null,
+        "unicode_emoji": null,
+        "flags": 0
+      }
+    ],
+    "default_message_notifications": 1,
+    "mfa_level": 0,
+    "explicit_content_filter": 2,
+    "max_presences": null,
+    "max_members": 25000000,
+    "max_stage_video_channel_users": 50,
+    "max_video_channel_users": 25,
+    "vanity_url_code": null,
+    "premium_tier": 1,
+    "premium_subscription_count": 2,
+    "preferred_locale": "en-US",
+    "rules_channel_id": "1527114620974792746",
+    "safety_alerts_channel_id": null,
+    "public_updates_channel_id": "1527114621725573190",
+    "hub_type": null,
+    "premium_progress_bar_enabled": true,
+    "premium_progress_bar_enabled_user_updated_at": null,
+    "latest_onboarding_question_id": "1527118258044407945",
+    "nsfw": false,
+    "nsfw_level": 0,
+    "owner_configured_content_level": 0,
+    "emojis": [
+      {
+        "id": "1527115991463628862",
+        "name": "gio",
+        "roles": [],
+        "require_colons": true,
+        "managed": false,
+        "animated": false,
+        "available": true
+      },
+      {
+        "id": "1527115993661313266",
+        "name": "giocrown",
+        "roles": [],
+        "require_colons": true,
+        "managed": false,
+        "animated": false,
+        "available": true
+      }
+    ],
+    "stickers": [],
+    "incidents_data": null,
+    "inventory_settings": null,
+    "official_message_color": null,
+    "theme": null,
+    "embed_enabled": false,
+    "embed_channel_id": null
+  },
+  "roles": [
+    {
+      "id": "1527114619829620736",
+      "name": "@everyone",
+      "description": null,
+      "permissions": "139690626625",
+      "position": 0,
+      "color": 0,
+      "colors": {
+        "primary_color": 0,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527114619829620737",
+      "name": "✂️ Clip Editor",
+      "description": null,
+      "permissions": "0",
+      "position": 5,
+      "color": 3447003,
+      "colors": {
+        "primary_color": 3447003,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": true,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527114619829620738",
+      "name": "⭐ OG Fan",
+      "description": null,
+      "permissions": "0",
+      "position": 6,
+      "color": 10181046,
+      "colors": {
+        "primary_color": 10181046,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": true,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527114619829620739",
+      "name": "Twitch ping",
+      "description": null,
+      "permissions": "0",
+      "position": 7,
+      "color": 7419530,
+      "colors": {
+        "primary_color": 7419530,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 1
+    },
+    {
+      "id": "1527114619829620740",
+      "name": "News Ping",
+      "description": null,
+      "permissions": "0",
+      "position": 8,
+      "color": 6323595,
+      "colors": {
+        "primary_color": 6323595,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 1
+    },
+    {
+      "id": "1527114619829620741",
+      "name": "Video Ping",
+      "description": null,
+      "permissions": "0",
+      "position": 9,
+      "color": 1535912,
+      "colors": {
+        "primary_color": 1535912,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 1
+    },
+    {
+      "id": "1527114619829620742",
+      "name": "MOD",
+      "description": null,
+      "permissions": "1116720868486",
+      "position": 10,
+      "color": 3066993,
+      "colors": {
+        "primary_color": 3066993,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": true,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527114619829620743",
+      "name": "ADMIN",
+      "description": null,
+      "permissions": "8864258447638527",
+      "position": 12,
+      "color": 15548997,
+      "colors": {
+        "primary_color": 15548997,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": true,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527114619829620744",
+      "name": "Owner",
+      "description": null,
+      "permissions": "8864258447638527",
+      "position": 13,
+      "color": 16711680,
+      "colors": {
+        "primary_color": 16711680,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527115138468155406",
+      "name": "lightskingio",
+      "description": null,
+      "permissions": "8",
+      "position": 11,
+      "color": 0,
+      "colors": {
+        "primary_color": 0,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": true,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "tags": {
+        "bot_id": "1523937063173361744"
+      },
+      "flags": 0
+    },
+    {
+      "id": "1527378202077691954",
+      "name": "🌱 Regular",
+      "description": null,
+      "permissions": "414568533568",
+      "position": 4,
+      "color": 3066993,
+      "colors": {
+        "primary_color": 3066993,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527378202828214282",
+      "name": "🏆 Legend",
+      "description": null,
+      "permissions": "414568533568",
+      "position": 3,
+      "color": 15105570,
+      "colors": {
+        "primary_color": 15105570,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527378203524730923",
+      "name": "💎 Day One",
+      "description": null,
+      "permissions": "414568533568",
+      "position": 2,
+      "color": 1752220,
+      "colors": {
+        "primary_color": 1752220,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527379167505547385",
+      "name": "lightskin",
+      "description": null,
+      "permissions": "139690626624",
+      "position": 1,
+      "color": 15843965,
+      "colors": {
+        "primary_color": 15843965,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527515119381119038",
+      "name": "🤖 Gio Bot",
+      "description": null,
+      "permissions": "0",
+      "position": 14,
+      "color": 16107596,
+      "colors": {
+        "primary_color": 16107596,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": true,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527533238921330748",
+      "name": "👑 GIO",
+      "description": null,
+      "permissions": "0",
+      "position": 15,
+      "color": 15844367,
+      "colors": {
+        "primary_color": 15844367,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": true,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    },
+    {
+      "id": "1527693619555860741",
+      "name": "Server Booster",
+      "description": null,
+      "permissions": "139690626624",
+      "position": 1,
+      "color": 16023551,
+      "colors": {
+        "primary_color": 16023551,
+        "secondary_color": 11816191,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": true,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "tags": {
+        "premium_subscriber": null
+      },
+      "flags": 0
+    },
+    {
+      "id": "1527800686299840615",
+      "name": ".fmbot",
+      "description": null,
+      "permissions": "275415092288",
+      "position": 1,
+      "color": 0,
+      "colors": {
+        "primary_color": 0,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": false,
+      "managed": true,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "tags": {
+        "bot_id": "356268235697553409"
+      },
+      "flags": 0
+    },
+    {
+      "id": "1527802566799392968",
+      "name": "💖 BOOSTER",
+      "description": null,
+      "permissions": "139690626625",
+      "position": 1,
+      "color": 16023551,
+      "colors": {
+        "primary_color": 16023551,
+        "secondary_color": null,
+        "tertiary_color": null
+      },
+      "hoist": true,
+      "managed": false,
+      "mentionable": false,
+      "icon": null,
+      "unicode_emoji": null,
+      "flags": 0
+    }
+  ],
+  "channels": [
+    {
+      "id": "1527114620974792744",
+      "type": 4,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "📌 START HERE",
+      "parent_id": null,
+      "position": 0,
+      "permission_overwrites": []
+    },
+    {
+      "id": "1527114620974792745",
+      "type": 0,
+      "last_message_id": "1528313415292944394",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "👋-welcome",
+      "parent_id": "1527114620974792744",
+      "rate_limit_per_user": 0,
+      "topic": "Welcome to the official lightskingio server!",
+      "position": 0,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1088",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114620974792746",
+      "type": 0,
+      "last_message_id": "1527116292023123978",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "「📋」rules",
+      "parent_id": "1527114620974792744",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 1,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1088",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114620974792747",
+      "type": 0,
+      "last_message_id": "1527530291722326179",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "「📣」server-announcements",
+      "parent_id": "1527114620974792744",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 2,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1088",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114620974792748",
+      "type": 0,
+      "last_message_id": "1527932960396017694",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "「📢」announcements",
+      "parent_id": "1527114620974792744",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 3,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1088",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114620974792749",
+      "type": 0,
+      "last_message_id": null,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "「📹」socials",
+      "parent_id": "1527114620974792744",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 4,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1088",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114620974792750",
+      "type": 0,
+      "last_message_id": "1527115997314683002",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🎭-get-roles",
+      "parent_id": "1527114620974792744",
+      "rate_limit_per_user": 0,
+      "topic": "Grab your ping roles here.",
+      "position": 5,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1088",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114620974792751",
+      "type": 4,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🎥 GIO CONTENT",
+      "parent_id": null,
+      "position": 1,
+      "permission_overwrites": []
+    },
+    {
+      "id": "1527114620974792752",
+      "type": 0,
+      "last_message_id": "1528312735295602779",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "《📸》tiktok-uploads",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 7,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "274877908032",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114620974792753",
+      "type": 0,
+      "last_message_id": null,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "《🎥》youtube-uploads",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 8,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "274877908032",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291503",
+      "type": 0,
+      "last_message_id": null,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "《👌》twitch-uploads",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 9,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "274877908032",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291504",
+      "type": 0,
+      "last_message_id": "1527584764142293002",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💻┆live-streams",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 10,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "274877908032",
+          "deny": "2048"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "2048",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291505",
+      "type": 0,
+      "last_message_id": "1527936677908054016",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💡│tiktok-ideas",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 11,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291506",
+      "type": 0,
+      "last_message_id": null,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💡│youtube-ideas",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 12,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291507",
+      "type": 0,
+      "last_message_id": "1527826426609402017",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "📼︱clips",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 14,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291508",
+      "type": 4,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💬 COMMUNITY",
+      "parent_id": null,
+      "position": 2,
+      "permission_overwrites": []
+    },
+    {
+      "id": "1527114621247291509",
+      "type": 0,
+      "last_message_id": "1528313577390211072",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💬┆chat",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 15,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291510",
+      "type": 0,
+      "last_message_id": "1528114310038032455",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💬┆chat-2",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 16,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621247291512",
+      "type": 0,
+      "last_message_id": "1527947801038688266",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🔥│new-memes",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 18,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953909",
+      "type": 0,
+      "last_message_id": "1527537847656124446",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "📷┆media",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 19,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953910",
+      "type": 0,
+      "last_message_id": "1527941449684094996",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🎮-gaming",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": "Gaming talk, LFG, squad up.",
+      "position": 20,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953911",
+      "type": 0,
+      "last_message_id": "1528079777217646593",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🤖-bot-commands",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": "Spam bot commands here, not in general.",
+      "position": 21,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953912",
+      "type": 4,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🔊 VOICE",
+      "parent_id": null,
+      "position": 3,
+      "permission_overwrites": []
+    },
+    {
+      "id": "1527114621498953913",
+      "type": 2,
+      "last_message_id": "1528079883568414812",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "✦🔊‖ LOUNGE 1",
+      "parent_id": "1527114621498953912",
+      "rate_limit_per_user": 0,
+      "bitrate": 64000,
+      "user_limit": 0,
+      "rtc_region": null,
+      "position": 24,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953914",
+      "type": 2,
+      "last_message_id": "1528051400565719151",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🎮 Gaming VC",
+      "parent_id": "1527114621498953912",
+      "rate_limit_per_user": 0,
+      "bitrate": 64000,
+      "user_limit": 0,
+      "rtc_region": null,
+      "position": 25,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953915",
+      "type": 2,
+      "last_message_id": null,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "📺 Stream Watch",
+      "parent_id": "1527114621498953912",
+      "rate_limit_per_user": 0,
+      "bitrate": 64000,
+      "user_limit": 0,
+      "rtc_region": null,
+      "position": 26,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953916",
+      "type": 4,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🛡️ STAFF",
+      "parent_id": null,
+      "position": 4,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "0",
+          "deny": "1024"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        }
+      ]
+    },
+    {
+      "id": "1527114621498953917",
+      "type": 0,
+      "last_message_id": "1528313414211076196",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🛡️-staff-chat",
+      "parent_id": "1527114621498953916",
+      "rate_limit_per_user": 0,
+      "topic": "Mod team coordination.",
+      "position": 27,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "0",
+          "deny": "1024"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621498953918",
+      "type": 0,
+      "last_message_id": "1527890883725234186",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "📋-mod-logs",
+      "parent_id": "1527114621498953916",
+      "rate_limit_per_user": 0,
+      "topic": "Moderation actions log.",
+      "position": 28,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "0",
+          "deny": "1024"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527114621725573190",
+      "type": 0,
+      "last_message_id": "1527516807882084372",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "moderator-only",
+      "parent_id": "1527114621498953916",
+      "rate_limit_per_user": 0,
+      "topic": null,
+      "position": 29,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "0",
+          "deny": "1024"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527115981095440434",
+      "type": 13,
+      "last_message_id": "1528114307492216913",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "✦🎤‖ LIVE NOW",
+      "parent_id": "1527114621498953912",
+      "rate_limit_per_user": 0,
+      "bitrate": 64000,
+      "user_limit": 10000,
+      "rtc_region": null,
+      "topic": null,
+      "position": 23,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "16",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527143493921673337",
+      "type": 0,
+      "last_message_id": "1528043562338619422",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💡-ideas",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": "Drop your ideas — videos, server stuff, events, anything. Best ones get made. 💡",
+      "position": 17,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527369819639517274",
+      "type": 0,
+      "last_message_id": "1527700030356590754",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "💡│twitch-ideas",
+      "parent_id": "1527114620974792751",
+      "rate_limit_per_user": 0,
+      "topic": "Ideas for Twitch streams — games, formats, collabs. 💡",
+      "position": 13,
+      "permission_overwrites": [],
+      "nsfw": false
+    },
+    {
+      "id": "1527375997324886068",
+      "type": 0,
+      "last_message_id": "1528315753009512449",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🗄️-bot-data",
+      "parent_id": "1527114621498953916",
+      "rate_limit_per_user": 0,
+      "topic": "Gio Bot internal storage — do not delete.",
+      "position": 30,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "0",
+          "deny": "1024"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527531812979736700",
+      "type": 0,
+      "last_message_id": "1527531814355468368",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "📊-stats",
+      "parent_id": "1527114620974792744",
+      "rate_limit_per_user": 0,
+      "topic": "Live server stats — updates every 30 seconds.",
+      "position": 6,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1024",
+          "deny": "2048"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527534721272381440",
+      "type": 2,
+      "last_message_id": null,
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "👥 Members: 286",
+      "parent_id": null,
+      "rate_limit_per_user": 0,
+      "bitrate": 64000,
+      "user_limit": 0,
+      "rtc_region": null,
+      "position": 0,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1024",
+          "deny": "1048576"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527801716097941524",
+      "type": 0,
+      "last_message_id": "1528125278084141209",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "🏆-hall-of-fame",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": "Legendary messages — 3+ 🔥 reactions gets you in here forever.",
+      "position": 22,
+      "permission_overwrites": [
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "1088",
+          "deny": "2048"
+        }
+      ],
+      "nsfw": false
+    },
+    {
+      "id": "1527929810507272283",
+      "type": 0,
+      "last_message_id": "1527953081323753612",
+      "flags": 0,
+      "guild_id": "1527114619829620736",
+      "name": "⭐-og-lounge",
+      "parent_id": "1527114621247291508",
+      "rate_limit_per_user": 0,
+      "topic": "Level 10+ only. If you can read this, you earned it. ⭐",
+      "position": 31,
+      "permission_overwrites": [
+        {
+          "id": "1527533238921330748",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527378203524730923",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527378202828214282",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620736",
+          "type": 0,
+          "allow": "0",
+          "deny": "1024"
+        },
+        {
+          "id": "1527802566799392968",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620742",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620743",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620738",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        },
+        {
+          "id": "1527114619829620744",
+          "type": 0,
+          "allow": "1024",
+          "deny": "0"
+        }
+      ],
+      "nsfw": false
+    }
+  ],
+  "automod": [
+    {
+      "id": "1527115987349147749",
+      "guild_id": "1527114619829620736",
+      "creator_id": "1523937063173361744",
+      "name": "Block slurs & explicit language",
+      "event_type": 1,
+      "actions": [
+        {
+          "type": 1,
+          "metadata": {
+            "custom_message": "That language is blocked here. Check #rules."
+          }
+        }
+      ],
+      "trigger_type": 4,
+      "enabled": true,
+      "exempt_roles": [
+        "1527114619829620744",
+        "1527114619829620742",
+        "1527114619829620743"
+      ],
+      "exempt_channels": [
+        "1527114621725573190",
+        "1527114621498953917",
+        "1527114621498953918"
+      ],
+      "trigger_metadata": {
+        "allow_list": [],
+        "presets": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "id": "1527115987885752482",
+      "guild_id": "1527114619829620736",
+      "creator_id": "1523937063173361744",
+      "name": "Block spam content",
+      "event_type": 1,
+      "actions": [
+        {
+          "type": 1,
+          "metadata": {}
+        }
+      ],
+      "trigger_type": 3,
+      "enabled": true,
+      "exempt_roles": [
+        "1527114619829620744",
+        "1527114619829620742",
+        "1527114619829620743"
+      ],
+      "exempt_channels": [
+        "1527114621498953918",
+        "1527114621498953917",
+        "1527114621725573190"
+      ],
+      "trigger_metadata": {}
+    },
+    {
+      "id": "1527115989303427083",
+      "guild_id": "1527114619829620736",
+      "creator_id": "1523937063173361744",
+      "name": "Block invite links",
+      "event_type": 1,
+      "actions": [
+        {
+          "type": 1,
+          "metadata": {
+            "custom_message": "No server invite links without mod approval."
+          }
+        },
+        {
+          "type": 2,
+          "metadata": {
+            "channel_id": "1527114621498953918"
+          }
+        }
+      ],
+      "trigger_type": 1,
+      "enabled": true,
+      "exempt_roles": [
+        "1527114619829620744",
+        "1527114619829620742",
+        "1527114619829620743"
+      ],
+      "exempt_channels": [
+        "1527114621725573190",
+        "1527114621498953917",
+        "1527114621498953918"
+      ],
+      "trigger_metadata": {
+        "keyword_filter": [],
+        "regex_patterns": [
+          "(?i)discord\\.gg/\\w+",
+          "(?i)discord(app)?\\.com/invite/\\w+"
+        ],
+        "allow_list": []
+      }
+    },
+    {
+      "id": "1527533241567940849",
+      "guild_id": "1527114619829620736",
+      "creator_id": "1523937063173361744",
+      "name": "Block Gio impersonation",
+      "event_type": 2,
+      "actions": [
+        {
+          "type": 4,
+          "metadata": {}
+        }
+      ],
+      "trigger_type": 6,
+      "enabled": true,
+      "exempt_roles": [
+        "1527114619829620744",
+        "1527533238921330748",
+        "1527114619829620743"
+      ],
+      "exempt_channels": [],
+      "trigger_metadata": {
+        "keyword_filter": [
+          "lightskin.gio",
+          "lightskingio",
+          "lightskin gio",
+          "light skin gio",
+          "real gio",
+          "gio official"
+        ],
+        "regex_patterns": [],
+        "allow_list": []
+      }
+    },
+    {
+      "id": "1527800322934837371",
+      "guild_id": "1527114619829620736",
+      "creator_id": "1523937063173361744",
+      "name": "Block pinging Gio",
+      "event_type": 1,
+      "actions": [
+        {
+          "type": 1,
+          "metadata": {
+            "custom_message": "Don’t ping Gio directly — drop it in 💡-ideas or chat and he’ll see it. 👑"
+          }
+        }
+      ],
+      "trigger_type": 1,
+      "enabled": true,
+      "exempt_roles": [
+        "1527114619829620744",
+        "1527533238921330748",
+        "1527114619829620742",
+        "1527114619829620743"
+      ],
+      "exempt_channels": [],
+      "trigger_metadata": {
+        "keyword_filter": [
+          "<@1481705917509668864>",
+          "<@!1481705917509668864>"
+        ],
+        "regex_patterns": [],
+        "allow_list": []
+      }
+    },
+    {
+      "id": "1030554520465440818",
+      "guild_id": "1527114619829620736",
+      "creator_id": "1008776202191634432",
+      "name": "Block Mention Spam",
+      "event_type": 1,
+      "actions": [
+        {
+          "type": 1,
+          "metadata": {}
+        }
+      ],
+      "trigger_type": 5,
+      "enabled": true,
+      "exempt_roles": [],
+      "exempt_channels": [],
+      "trigger_metadata": {
+        "mention_total_limit": 20,
+        "mention_raid_protection_enabled": true
+      }
+    }
+  ],
+  "onboarding": {
+    "guild_id": "1527114619829620736",
+    "prompts": [
+      {
+        "id": "1527118258044407940",
+        "title": "Which do you want pings for?",
+        "options": [
+          {
+            "id": "1527118258044407943",
+            "title": "Posts",
+            "description": "New Lightskin Gio posts",
+            "emoji": {
+              "id": null,
+              "name": null,
+              "animated": false
+            },
+            "role_ids": [
+              "1527114619829620741"
+            ],
+            "channel_ids": []
+          },
+          {
+            "id": "1527118258044407944",
+            "title": "News ",
+            "description": "Server news, updates, etc",
+            "emoji": {
+              "id": null,
+              "name": null,
+              "animated": false
+            },
+            "role_ids": [
+              "1527114619829620740"
+            ],
+            "channel_ids": []
+          },
+          {
+            "id": "1527118258044407945",
+            "title": "Live streams",
+            "description": "Ping me when Gio goes live",
+            "emoji": {
+              "id": null,
+              "name": "🔴",
+              "animated": false
+            },
+            "role_ids": [
+              "1527114619829620739"
+            ],
+            "channel_ids": []
+          }
+        ],
+        "single_select": false,
+        "required": false,
+        "in_onboarding": true,
+        "type": 0
+      }
+    ],
+    "default_channel_ids": [
+      "1527114620974792745",
+      "1527114620974792746",
+      "1527114620974792747",
+      "1527114620974792748",
+      "1527114620974792749",
+      "1527114620974792750",
+      "1527114620974792752",
+      "1527114620974792753",
+      "1527114621498953909",
+      "1527114621498953910",
+      "1527114621498953911",
+      "1527369819639517274",
+      "1527114621247291503",
+      "1527114621247291504",
+      "1527114621247291505",
+      "1527114621247291506",
+      "1527114621247291507",
+      "1527114621247291509",
+      "1527114621247291510",
+      "1527114621247291512",
+      "1527143493921673337"
+    ],
+    "enabled": true,
+    "mode": 1,
+    "below_requirements": false,
+    "responses": [],
+    "onboarding_prompts_seen": {},
+    "onboarding_responses_seen": {}
+  },
+  "welcomeScreen": {
+    "description": "The official home of Gio's community — clips, memes, and chaos. 🤝",
+    "welcome_channels": [
+      {
+        "channel_id": "1527114620974792746",
+        "description": "Read the rules first",
+        "emoji_id": null,
+        "emoji_name": "📜"
+      },
+      {
+        "channel_id": "1527114621247291509",
+        "description": "Say what's up",
+        "emoji_id": null,
+        "emoji_name": "💬"
+      },
+      {
+        "channel_id": "1527114620974792752",
+        "description": "Fresh TikToks land here",
+        "emoji_id": null,
+        "emoji_name": "🎵"
+      },
+      {
+        "channel_id": "1527114620974792750",
+        "description": "Grab your ping roles",
+        "emoji_id": null,
+        "emoji_name": "🎭"
+      },
+      {
+        "channel_id": "1527114621247291507",
+        "description": "Post your best edits",
+        "emoji_id": null,
+        "emoji_name": "✂️"
+      }
+    ]
+  }
+}
